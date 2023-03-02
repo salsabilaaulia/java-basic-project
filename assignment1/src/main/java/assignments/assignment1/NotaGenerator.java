@@ -92,17 +92,19 @@ public class NotaGenerator {
         String nomorHP;
         while (true) {
             nomorHP = input.nextLine();
-            //validasi input nomor HP
-            try {
-                if (Double.parseDouble(nomorHP) >= 0) {
-                    break;
-                }
-                else {
-                    System.out.println("Nomor hp hanya menerima digit");
-                }               
-            }
-            catch (Exception e) {
+            //validasi input nomor HP dan menghindari floating dan minus
+            if (nomorHP.contains(".") || nomorHP.contains("-")) {
                 System.out.println("Nomor hp hanya menerima digit");
+            }
+            else {
+                try {
+                    Double.parseDouble(nomorHP);
+                    break;
+                }               
+
+                catch (Exception e) {
+                    System.out.println("Nomor hp hanya menerima digit");
+                }
             }
         }
         return nomorHP;
