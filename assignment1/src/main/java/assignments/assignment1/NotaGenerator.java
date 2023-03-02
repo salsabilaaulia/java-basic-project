@@ -137,7 +137,7 @@ public class NotaGenerator {
             //validasi input berat
             try {
                 Integer.parseInt(berat);
-                if (Integer.parseInt(berat) < 0) {
+                if (Integer.parseInt(berat) <= 0) {
                     System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                 }
                 else {
