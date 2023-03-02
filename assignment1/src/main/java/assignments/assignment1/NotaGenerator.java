@@ -94,8 +94,12 @@ public class NotaGenerator {
             nomorHP = input.nextLine();
             //validasi input nomor HP
             try {
-                Double.parseDouble(nomorHP);
-                break;
+                if (Double.parseDouble(nomorHP) >= 0) {
+                    break;
+                }
+                else {
+                    System.out.println("Nomor hp hanya menerima digit");
+                }               
             }
             catch (Exception e) {
                 System.out.println("Nomor hp hanya menerima digit");
