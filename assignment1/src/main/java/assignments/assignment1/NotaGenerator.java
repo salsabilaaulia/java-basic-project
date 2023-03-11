@@ -93,7 +93,7 @@ public class NotaGenerator {
         while (true) {
             nomorHP = input.nextLine();
             //validasi input nomor HP dan menghindari floating dan minus
-            if (nomorHP.contains(".") || nomorHP.contains("-")) {
+            if (nomorHP.contains(".") || nomorHP.contains("-") || nomorHP.contains("+")) {
                 System.out.println("Nomor hp hanya menerima digit");
             }
             else {
@@ -248,7 +248,7 @@ public class NotaGenerator {
         id = namaNomorID + "-" + checksum;
         return id;
     }
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima) {
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, int idNota) {
         int hargaPaketPerKg = hargaPaket(paket);
         String tanggalSelesai = tanggalSelesai(tanggalTerima, paket);
 
@@ -257,13 +257,17 @@ public class NotaGenerator {
             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
             berat = 2;
         }
-        
+
+        System.out.println("Berhasil menambahkan nota!");
+        System.out.printf("[ID Nota = %d]\n", idNota);
+
         //mereturn string nota
         return "ID    : " + id + "\n"+ 
             "Paket : " + paket + "\n"+ 
             "Harga :" + "\n"+  
             berat + " kg x " + hargaPaketPerKg +" = " + (berat*hargaPaketPerKg) + "\n"+ 
-            "Tanggal Terima  : " + tanggalTerima + "\n"+ 
-            "Tanggal Selesai : " + tanggalSelesai;
+            "Tanggal Terima  : " + tanggalTerima + "\n" + 
+            "Tanggal Selesai : " + tanggalSelesai + "\n" + 
+            "Status      	: Belum bisa diambil :(";
     }
 }

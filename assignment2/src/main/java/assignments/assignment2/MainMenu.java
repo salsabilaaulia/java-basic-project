@@ -40,7 +40,7 @@ public class MainMenu {
         String nomorHP = inputNomorHP();
         String id = generateId(nama, nomorHP);
 
-        if (adaMember(id) == true) {
+        if (adaMember(id) != null) {
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, nomorHP);
         }
         else {
@@ -52,6 +52,23 @@ public class MainMenu {
 
     private static void handleGenerateNota() {
         // TODO: handle ambil cucian
+        System.out.println("Masukan ID member: ");
+        String id = input.nextLine();
+        
+        if (adaMember(id) != null) {
+            String paket = inputPaket();
+            int berat = Integer.parseInt(inputBerat());
+            String tanggalMasuk = fmt.format(cal.getTime());
+            int idNota = notaList.size();
+            Member member = adaMember(id);
+            Nota nota = new Nota(member, paket, berat, tanggalMasuk);
+
+            notaList.add(nota);
+            System.out.println(generateNota(id, paket, berat, tanggalMasuk, idNota));
+        }
+        else {
+            System.out.printf("Member dengan ID %s tidak ditemukan!\n", id);
+        }
     }
 
     private static void handleListNota() {
@@ -60,7 +77,7 @@ public class MainMenu {
             System.out.println("Terdaftar 0 nota dalam sistem.");
         }
         else {
-            
+
         }
     }
 
@@ -97,14 +114,14 @@ public class MainMenu {
         System.out.println("[0] Exit");
     }
 
-    public static boolean adaMember(String id){
+    public static Member adaMember(String id){
         if (memberList != null) {
             for (Member member: memberList) {
                 if (member.getId().equals(id)) {
-                    return true;
+                    return member;
                 }      
             }
         }
-        return false;
+        return null;
     }
 }
