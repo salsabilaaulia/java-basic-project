@@ -17,8 +17,11 @@ public class MainMenu {
 
     public static void main(String[] args) {
         boolean isRunning = true;
+        //implementasi menu utama
         while (isRunning) {
             printMenu();
+
+            //input pilihan user
             System.out.print("Pilihan : ");
             String command = input.nextLine();
             System.out.println("================================");
@@ -42,9 +45,12 @@ public class MainMenu {
         String nomorHP = inputNomorHP();
         String id = generateId(nama, nomorHP);
 
+        //mencegah duplikat id
         if (adaMember(id) != null) {
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, nomorHP);
         }
+
+        //membuat objek member dan menambahkannya ke list member
         else {
             Member member = new Member(nama, nomorHP, id);
             memberList.add(member);
@@ -53,22 +59,26 @@ public class MainMenu {
     }
 
     private static void handleGenerateNota() {
-        // handle ambil cucian
+        // menghandle ambil cucian
         System.out.println("Masukan ID member: ");
         String id = input.nextLine();
         
+        //menggenerate nota user
         if (adaMember(id) != null) {
             String paket = inputPaket();
             int berat = Integer.parseInt(inputBerat());
             String tanggalMasuk = fmt.format(cal.getTime());
             int sisaHariPengerjaan = hariPengerjaan(paket);
             int idNota = countIdNota;
+
+            //membuat objek nota dan memasukkannya ke list nota
             Member member = adaMember(id);
             member.setBonusCounter();
             int bonusCounter = member.getBonusCounter();
 
             Nota nota = new Nota(member, paket, berat, tanggalMasuk, sisaHariPengerjaan, idNota);
 
+            //menggenerate output nota user
             notaList.add(nota);
             countIdNota++;
             System.out.println(generateNota(id, paket, berat, tanggalMasuk, idNota, bonusCounter));
@@ -79,7 +89,7 @@ public class MainMenu {
     }
 
     private static void handleListNota() {
-        //handle list semua nota pada sistem
+        //menghandle list semua nota pada sistem
         if (notaList.size() == 0) {
             System.out.println("Terdaftar 0 nota dalam sistem.");
         }
@@ -92,6 +102,7 @@ public class MainMenu {
     }
 
     private static void handleListUser() {
+        //menghandle list semua member pada sistem
         if (memberList.size() == 0) {
             System.out.println("Terdaftar 0 member dalam sistem.");
         }
@@ -104,9 +115,11 @@ public class MainMenu {
     }
 
     private static void handleAmbilCucian() {
-        //TO DO: handle ambil cucian
+        //menghandle ambil cucian
         String InputIdNotaString = inputIdNotaCucian();
         int inputIdNota = Integer.parseInt(InputIdNotaString);
+
+        //pengecekan id nota dan validasi
         for (int i = 0; i < notaList.size(); i++) {
             if (notaList.get(i).getIdNota() == inputIdNota) {
                 if (notaList.get(i).getIsReady() == true) {
@@ -135,9 +148,11 @@ public class MainMenu {
             e.printStackTrace();
         }
 
-        //output
+        //output sistem
         System.out.println("Dek Depe tidur hari ini... zzz...");
         if (notaList != null) {
+
+            //output jika ada nota yang dapat diambil
             for (Nota nota : notaList) {
                 nota.setSisaHariPengerjaan();
                 if (nota.getIsReady() == true) {
@@ -150,6 +165,7 @@ public class MainMenu {
     }
 
     private static void printMenu() {
+        //mengeprint main interface program
         System.out.println("\nSelamat datang di CuciCuci!");
         System.out.printf("Sekarang Tanggal: %s\n", tanggal);
         System.out.println("==============Menu==============");
@@ -163,6 +179,7 @@ public class MainMenu {
     }
 
     public static Member adaMember(String id){
+        //method untuk mengecek member dari list member
         if (memberList != null) {
             for (Member member: memberList) {
                 if (member.getId().equals(id)) {
@@ -175,11 +192,12 @@ public class MainMenu {
 
 
     public static String inputIdNotaCucian() {
-        System.out.println("Masukan ID nota yang akan diambil:");
+        //validasi input id nota user ambil cucian
+        System.out.println("Masukan id nota yang akan diambil:");
         String inputIdNota;
         while (true) {
             inputIdNota = input.nextLine();
-            //validasi input nomor HP dan menghindari floating dan minus
+            //validasi input id nota dan menghindari floating dan minus
             if (inputIdNota.contains(".") || inputIdNota.contains("-") || inputIdNota.contains("+")) {
                 System.out.println("ID nota berbentuk angka!");
             }

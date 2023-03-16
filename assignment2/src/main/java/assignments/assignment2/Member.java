@@ -1,11 +1,13 @@
 package assignments.assignment2;
 
 public class Member {
+    //atribut class Member
     private String nama;
     private String nomorHP;
     private String id;
     private int bonusCounter;
 
+    //constructor class Member
     public Member(String nama, String nomorHP, String id) {
         this.nama = nama;
         this.nomorHP = nomorHP;
@@ -13,6 +15,7 @@ public class Member {
         this.bonusCounter = 0;
     }
 
+    //method setter getter class Member
     public String getNama() {
         return nama;
     }
@@ -28,7 +31,7 @@ public class Member {
     public int getBonusCounter() {
         return bonusCounter;
     }
-
+    
     public void setBonusCounter() {
         this.bonusCounter++;
     }

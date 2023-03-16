@@ -21,6 +21,7 @@ public class Nota {
         this.isReady = false;
     }
 
+    //method setter getter class Nota
     public Member getMember() {
         return member;
     }
