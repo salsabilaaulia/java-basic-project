@@ -1,17 +1,16 @@
 package assignments.assignment2;
 
-import assignments.assignment1.NotaGenerator;
-
 public class Member {
-    // TODO: tambahkan attributes yang diperlukan untuk class ini
-    String nama;
-    String nomorHP;
-    String id;
+    private String nama;
+    private String nomorHP;
+    private String id;
+    private int bonusCounter;
 
     public Member(String nama, String nomorHP, String id) {
         this.nama = nama;
         this.nomorHP = nomorHP;
         this.id = id;
+        this.bonusCounter = 0;
     }
 
     public String getNama() {
@@ -24,5 +23,13 @@ public class Member {
 
     public String getId() {
         return id;
+    }
+
+    public int getBonusCounter() {
+        return bonusCounter;
+    }
+
+    public void setBonusCounter() {
+        this.bonusCounter++;
     }
 }

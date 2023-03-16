@@ -2,7 +2,6 @@ package assignments.assignment1;
 
 //import library
 import java.util.Scanner;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;  
 
@@ -14,6 +13,7 @@ public class NotaGenerator {
     //method main untuk menjalankan program utama
     public static void main(String[] args) {
         //Implementasi menu utama
+    /*
         while (true) {
             //menu utama program
             printMenu();
@@ -61,6 +61,7 @@ public class NotaGenerator {
                 System.out.println("Perintah tidak diketahui, silakan periksa kembali.");
             }
         }
+    */
     }
 
     //method untuk menampilkan menu di NotaGenerator
@@ -94,7 +95,7 @@ public class NotaGenerator {
             nomorHP = input.nextLine();
             //validasi input nomor HP dan menghindari floating dan minus
             if (nomorHP.contains(".") || nomorHP.contains("-") || nomorHP.contains("+")) {
-                System.out.println("Nomor hp hanya menerima digit");
+                System.out.println("Field nomor hp hanya menerima digit.");
             }
             else {
                 try {
@@ -103,7 +104,7 @@ public class NotaGenerator {
                 }               
 
                 catch (Exception e) {
-                    System.out.println("Nomor hp hanya menerima digit");
+                    System.out.println("Field nomor hp hanya menerima digit.");
                 }
             }
         }
@@ -125,7 +126,7 @@ public class NotaGenerator {
             if (paket.equals("?")) {
                 showPaket();
             }
-            else if (paket.equals("express") || paket.equals("fast") || paket.equals("reguler")) {
+            else if (paket.equalsIgnoreCase("express") || paket.equalsIgnoreCase("fast") || paket.equalsIgnoreCase("reguler")) {
                 return paket;
             }           
             else {
@@ -160,15 +161,15 @@ public class NotaGenerator {
     //method untuk menentukan harga paket
     public static int hargaPaket(String paket) {
         int harga = 0;
-        if (paket.equals("express")) {
+        if (paket.equalsIgnoreCase("express")) {
             harga = 12000;
             return harga;
         }
-        else if (paket.equals("fast")) {
+        else if (paket.equalsIgnoreCase("fast")) {
             harga = 10000;
             return harga;
         }
-        else if (paket.equals("reguler")) {
+        else if (paket.equalsIgnoreCase("reguler")) {
             harga = 7000;
             return harga;
         }         
@@ -176,17 +177,23 @@ public class NotaGenerator {
     }
 
     //method untuk menghitung tanggal sesuai jenis paket
-    public static String tanggalSelesai(String tanggalTerima, String paket) {
-        int hari= 0;
-        if (paket.equals("express")) {
+    public static int hariPengerjaan(String paket) {
+        int hari = 0;
+        if (paket.equalsIgnoreCase("express")) {
             hari = 1;
         }
-        else if (paket.equals("fast")) {
+        else if (paket.equalsIgnoreCase("fast")) {
             hari = 2;
         }
-        else if (paket.equals("reguler")) {
+        else if (paket.equalsIgnoreCase("reguler")) {
             hari = 3;
         }    
+        return hari;
+    }
+
+    //method untuk menghitung tanggal sesuai jenis paket
+    public static String tanggalSelesai(String tanggalTerima, String paket) {
+        int hari = hariPengerjaan(paket);
 
         //menghitung pertambahan hari
         try {
@@ -248,7 +255,7 @@ public class NotaGenerator {
         id = namaNomorID + "-" + checksum;
         return id;
     }
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima, int idNota) {
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, int idNota, int bonusCounter) {
         int hargaPaketPerKg = hargaPaket(paket);
         String tanggalSelesai = tanggalSelesai(tanggalTerima, paket);
 
@@ -262,12 +269,21 @@ public class NotaGenerator {
         System.out.printf("[ID Nota = %d]\n", idNota);
 
         //mereturn string nota
-        return "ID    : " + id + "\n"+ 
-            "Paket : " + paket + "\n"+ 
-            "Harga :" + "\n"+  
-            berat + " kg x " + hargaPaketPerKg +" = " + (berat*hargaPaketPerKg) + "\n"+ 
-            "Tanggal Terima  : " + tanggalTerima + "\n" + 
-            "Tanggal Selesai : " + tanggalSelesai + "\n" + 
-            "Status      	: Belum bisa diambil :(";
+        String outputId = "ID    : " + id + "\n";
+        String outputPaket = "Paket : " + paket + "\n";
+        String outputHarga;
+        if (bonusCounter % 3 == 0) {
+            outputHarga = "Harga :" + "\n"+  
+                        berat + " kg x " + hargaPaketPerKg +" = " + (berat*hargaPaketPerKg) + " = " + (berat*hargaPaketPerKg)/2 + " (Discount member 50%!!!)" + "\n";
+        }
+        else {
+            outputHarga = "Harga :" + "\n"+  
+                    berat + " kg x " + hargaPaketPerKg +" = " + (berat*hargaPaketPerKg) + "\n";
+        }
+        
+        String outputTanggalTerima = "Tanggal Terima  : " + tanggalTerima + "\n";
+        String outputTanggalSelesai = "Tanggal Selesai : " + tanggalSelesai + "\n";
+        String outputStatus = "Status      	: Belum bisa diambil :(";
+        return outputId + outputPaket + outputHarga + outputTanggalTerima + outputTanggalSelesai + outputStatus;
     }
 }
