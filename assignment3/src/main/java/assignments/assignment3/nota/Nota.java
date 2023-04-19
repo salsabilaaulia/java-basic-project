@@ -4,7 +4,7 @@ import assignments.assignment3.user.Member;
 public class Nota {
     private Member member;
     private String paket;
-    private LaundryService[] services;
+    private ArrayList<LaundryService> services = new ArrayList<LaundryService>();
     private long baseHarga;
     private int sisaHariPengerjaan;
     private  int berat;
@@ -15,6 +15,14 @@ public class Nota {
 
     public Nota(Member member, int berat, String paket, String tanggal) {
         //TODO
+        this.idNota = totalNota;
+        this.member = member;
+        this.paket = paket;
+        this.berat = berat;
+        this.tanggalMasuk = tanggal;
+        this.sisaHariPengerjaan = NotaGenerator.toHariPaket(paket);
+        totalNota++;
+        member.addBonusCounter(1);        
     }
 
     public void addService(LaundryService service){

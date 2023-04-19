@@ -1,11 +1,11 @@
 package assignments.assignment3.user.menu;
 
 import assignments.assignment3.user.Member;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class SystemCLI {
-    protected Member[] memberList = new Member[0];
+    protected static ArrayList<Member> memberList = new ArrayList<Member>();
     protected Member loginMember;
     protected Scanner in;
 

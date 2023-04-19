@@ -1,38 +1,44 @@
 package assignments.assignment2;
 
+import assignments.assignment1.NotaGenerator;
+
 public class Member {
-    //atribut class Member
     private String nama;
-    private String nomorHP;
+    private String noHp;
     private String id;
     private int bonusCounter;
 
-    //constructor class Member
-    public Member(String nama, String nomorHP, String id) {
+    public Member(String nama, String noHp) {
         this.nama = nama;
-        this.nomorHP = nomorHP;
-        this.id = id;
-        this.bonusCounter = 0;
+        this.noHp = noHp;
+        this.id = NotaGenerator.generateId(nama, noHp);
     }
 
-    //method setter getter class Member
     public String getNama() {
         return nama;
     }
 
-    public String getNomorHP() {
-        return nomorHP;
+    public String getNoHp() {
+        return noHp;
     }
 
     public String getId() {
         return id;
     }
 
-    public int getBonusCounter() {
-        return bonusCounter;
+    public void addBonusCounter(int i) {
+        bonusCounter += i;
     }
-    
-    public void setBonusCounter() {
-        this.bonusCounter++;
+
+    public boolean isDiscount(){
+        if(bonusCounter == 3){
+            bonusCounter = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equals(String otherId) {
+        return otherId.equals(this.id);
     }
 }

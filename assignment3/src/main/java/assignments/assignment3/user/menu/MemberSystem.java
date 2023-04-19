@@ -12,6 +12,7 @@ public class MemberSystem extends SystemCLI {
     protected boolean processChoice(int choice) {
         boolean logout = false;
         // TODO
+        
         return logout;
     }
 
@@ -32,5 +33,6 @@ public class MemberSystem extends SystemCLI {
      */
     public void addMember(Member member) {
         // TODO
+        memberList.add(member);
     }
 }

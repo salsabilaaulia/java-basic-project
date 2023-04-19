@@ -3,6 +3,7 @@ package assignments.assignment3.user.menu;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
+import java.util.ArrayList;
 
 import static assignments.assignment3.nota.NotaManager.notaList;
 
@@ -12,13 +13,16 @@ public class EmployeeSystem extends SystemCLI {
      * Membuat object baru EmployeeSystem dan mendaftarkan Employee pada CuciCuci
      */
     public EmployeeSystem() {
-        memberList = new Member[]{
-                new Employee("Dek Depe", "akuDDP"),
-                new Employee("Depram", "musiktualembut"),
-                new Employee("Lita Duo", "gitCommitPush"),
-                new Employee("Ivan Hoshimachi", "SuamiSahSuisei"),
-        };
+        Member employee1 = new Employee("Dek Depe", "akuDDP");
+        Member employee2 = new Employee("Depram", "musiktualembut");
+        Member employee3 = new Employee("Lita Duo", "gitCommitPush");
+        Member employee4 = new Employee("Ivan Hoshimachi", "SuamiSahSuisei");
+        memberList.add(employee1);
+        memberList.add(employee2);
+        memberList.add(employee3);
+        memberList.add(employee4);
     }
+    
 
     /**
      * Memproses pilihan dari employee yang masuk ke sistem ini sesuai dengan menu specific.
