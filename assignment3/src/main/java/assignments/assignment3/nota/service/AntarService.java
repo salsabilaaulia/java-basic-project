@@ -1,6 +1,5 @@
 package assignments.assignment3.nota.service;
 
-import assignments.assignment3.nota.Nota;
 
 public class AntarService implements LaundryService{
     private boolean isDone = false;

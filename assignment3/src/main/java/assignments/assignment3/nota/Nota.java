@@ -3,15 +3,13 @@ import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
 import static assignments.assignment1.NotaGenerator.*;
 
-import java.security.Provider.Service;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Nota {
     private Member member;
     private String paket;
-    private ArrayList<LaundryService> services = new ArrayList<LaundryService>();
+    private LaundryService[] services = new LaundryService[0];
     private long baseHarga;
     private int sisaHariPengerjaan;
     private int berat;
@@ -33,7 +31,12 @@ public class Nota {
     }
 
     public void addService(LaundryService service){
-        services.add(service);
+        LaundryService[] temp = new LaundryService[services.length + 1];
+        for (int i = 0; i < services.length; i++) {
+            temp[i] = services[i];
+        }
+        temp[temp.length - 1] = service;
+        services = temp;
     }
 
     public String kerjakan(){
@@ -135,7 +138,7 @@ public class Nota {
         return isDone;
     }
 
-    public ArrayList<LaundryService> getServices(){
+    public LaundryService[] getServices(){
         return services;
     }
     

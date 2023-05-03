@@ -1,12 +1,11 @@
 package assignments.assignment3.user;
 
 import assignments.assignment3.nota.Nota;
-import java.util.ArrayList;
 public class Member {
     protected String id;
     protected String password;
     protected String nama;
-    protected ArrayList<Nota> notaList = new ArrayList<Nota>();
+    protected Nota[] notaList = new Nota[0];
 
     public Member(String nama, String id, String password) {
         this.nama = nama;
@@ -31,7 +30,12 @@ public class Member {
      * @param nota Nota object untuk ditambahkan.
      */
     public void addNota(Nota nota) {
-        notaList.add(nota);
+        Nota[] temp = new Nota[notaList.length + 1];
+        for (int i = 0; i < notaList.length; i++) {
+            temp[i] = notaList[i];
+        }
+        temp[notaList.length - 1] = nota;
+        notaList = temp;
     }
 
     /**
@@ -58,7 +62,7 @@ public class Member {
     }
     
 
-    public ArrayList<Nota> getNotaList() {
+    public Nota[] getNotaList() {
         return notaList;
     }
 }

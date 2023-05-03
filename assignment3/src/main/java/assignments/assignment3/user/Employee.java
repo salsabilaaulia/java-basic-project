@@ -1,5 +1,4 @@
 package assignments.assignment3.user;
-import java.util.ArrayList;
 public class Employee extends Member {
     public static int employeeCount = 0;
     public Employee(String nama, String password) {
