@@ -40,12 +40,13 @@ public class Nota {
     }
 
     public String kerjakan(){
-        for (LaundryService service : services) {
-            if (service.isDone() == false) {
-                return service.doWork();
+        for (int i = 0; i < services.length; i++) {
+            if (services[i].isDone() == true) {}
+            else {
+                return "Nota %d : " + services[i].doWork();
             }
         }
-        return "Sudah selesai.";
+        return String.format("Nota %d : Sudah selesai.", id);
     }
 
     public void toNextDay() {
@@ -57,15 +58,23 @@ public class Nota {
         for (LaundryService service : services) {
             harga += service.getHarga(berat);
         }
+        if (sisaHariPengerjaan < 0 && isDone == false) {
+            harga -= (Math.abs(sisaHariPengerjaan)*2000);
+            if (harga < 0) {
+                harga = 0;
+            }
+        }
         return harga;
     }
 
     public String getNotaStatus(){
-        isDone();
-        if (this.isDone == false) {
-            return "Belum selesai.";
+        isDone = isDone();
+        if (isDone == true) {
+            return String.format("Nota %d : Sudah selesai.", id);
         }
-        return "Sudah selesai.";
+        else {
+            return String.format("Nota %d : Belum selesai.", id);
+        }
     }
 
     @Override
@@ -87,8 +96,8 @@ public class Nota {
         cal.add(Calendar.DATE, toHariPaket(paket));
         output += String.format("tanggal selesai : %s\n", formatter.format(cal.getTime()));
         output += String.format("--- SERVICE LIST ---\n");
-        for (LaundryService service : services) {
-            output += String.format("-%s @ Rp.%d\n", service.getServiceName(), service.getHarga(berat));
+        for (int i = 0; i < services.length; i++) {
+            output += String.format("-%s @ Rp.%d\n", services[i].getServiceName(), services[i].getHarga(berat));
         }
         
         if (sisaHariPengerjaan < 0 && isDone == false ) {
@@ -97,7 +106,7 @@ public class Nota {
                 output += String.format("Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));
             }
             else {
-                output += String.format("Harga Akhir: %d", calculateHarga() - (Math.abs(sisaHariPengerjaan)*2000));
+                output += String.format("Harga Akhir: %d", calculateHarga());
                 output += String.format("Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));
             }
         }

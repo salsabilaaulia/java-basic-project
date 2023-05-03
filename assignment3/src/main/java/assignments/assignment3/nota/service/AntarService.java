@@ -1,6 +1,5 @@
 package assignments.assignment3.nota.service;
 
-
 public class AntarService implements LaundryService{
     private boolean isDone = false;
     @Override

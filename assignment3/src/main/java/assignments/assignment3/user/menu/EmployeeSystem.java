@@ -49,13 +49,13 @@ public class EmployeeSystem extends SystemCLI {
     protected void menuKerja() {
         System.out.println("Stand back! Depram beginning to nyuci!");
         for (Nota nota : notaList) {
-            System.out.printf("Nota %d : %s\n", nota.getId(), nota.kerjakan());
+            System.out.println(nota.kerjakan());
         }
     }
 
     protected void lihatListNota() {
         for (Nota nota : notaList) {
-            System.out.printf("Nota %d : %s\n", nota.getId(), nota.getNotaStatus());
+            System.out.println(nota.getNotaStatus());
         }
     }
 }

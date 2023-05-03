@@ -2,16 +2,12 @@ package assignments.assignment3.user.menu;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.service.AntarService;
 import assignments.assignment3.nota.service.CuciService;
-import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.nota.service.SetrikaService;
 import assignments.assignment3.user.Member;
 import static assignments.assignment1.NotaGenerator.*;
 import static assignments.assignment3.nota.NotaManager.*;
 
-import java.util.Scanner;
-
 public class MemberSystem extends SystemCLI {
-    static Scanner in = new Scanner(System.in);
     /**
      * Memproses pilihan dari Member yang masuk ke sistem ini sesuai dengan menu specific.
      *
@@ -56,47 +52,54 @@ public class MemberSystem extends SystemCLI {
     protected void menuLaundry() {
         Member member = loginMember;
         String tanggal = fmt.format(cal.getTime());
-        String paket = getPaket();
+        String paket = "";
+        while (true) {
+            System.out.println("Masukan paket laundry:");
+            showPaket();
+            paket = in.nextLine();
+
+            if (toHargaPaket(paket) < 0) {
+                System.out.printf("Paket %s tidak diketahui\n", paket);
+                System.out.println("[ketik ? untuk mencari tahu jenis paket]");
+            } else {
+                break;
+            }
+        }
         
-        int berat = getBerat();
+        System.out.println("Masukan berat cucian Anda [Kg]: ");
+        String beratInput = in.nextLine();
+        int berat = Integer.parseInt(beratInput);
+
+        if (berat < 2) {
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            berat = 2;
+        }
 
         Nota nota = new Nota(member, berat, paket, tanggal);
-        LaundryService cuci = new CuciService();
-        nota.addService(cuci);
-        getSetrika(nota);
-        getAntar(nota);
+        nota.addService(new CuciService());
+
+        System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
+        System.out.println("Hanya tambah 1000 / kg");
+        System.out.print("[Ketik x untuk tidak mau]: ");
+        if (in.nextLine().equalsIgnoreCase("x")) {
+        }
+        else {
+            nota.addService(new SetrikaService());
+        }
+
+        System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!");
+        System.out.println("Cuma 2000 / 4kg, kemudian 500 / kg");
+        System.out.print("[Ketik x untuk tidak mau]: ");
+        if (in.nextLine().equalsIgnoreCase("x")) {
+        }
+        else {
+            nota.addService(new AntarService());
+        }
 
         addNota(nota);
         member.addNota(nota);
 
         System.out.println("Nota berhasil dibuat!");
-
-    }
-
-    public static void getSetrika(Nota nota) {
-        System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
-        System.out.println("Hanya tambah 1000 / kg");
-        System.out.print("[Ketik x untuk tidak mau]: ");
-        String choice = in.nextLine();
-        if (choice.equalsIgnoreCase("x")) {
-        }
-        else {
-            LaundryService setrika = new SetrikaService();
-            nota.addService(setrika);
-        }
-    }
-
-    public static void getAntar(Nota nota) {
-        System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!");
-        System.out.println("Cuma 2000 / 4kg, kemudian 500 / kg");
-        System.out.print("[Ketik x untuk tidak mau]: ");
-        String choice = in.nextLine();
-        if (choice.equalsIgnoreCase("x")) {
-        }
-        else {
-            LaundryService antar = new AntarService();
-            nota.addService(antar);
-        }
     }
 
     protected void lihatNota() {

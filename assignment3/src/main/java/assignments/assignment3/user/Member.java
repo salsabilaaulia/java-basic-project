@@ -34,7 +34,7 @@ public class Member {
         for (int i = 0; i < notaList.length; i++) {
             temp[i] = notaList[i];
         }
-        temp[notaList.length - 1] = nota;
+        temp[temp.length - 1] = nota;
         notaList = temp;
     }
 
