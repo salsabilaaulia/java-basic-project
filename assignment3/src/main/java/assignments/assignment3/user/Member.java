@@ -56,8 +56,9 @@ public class Member {
     public String getId() {
         return id;
     }
+    
 
-    public Nota[] getNotaList() {
+    public ArrayList<Nota> getNotaList() {
         return notaList;
     }
 }

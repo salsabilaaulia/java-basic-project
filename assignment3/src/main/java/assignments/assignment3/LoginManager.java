@@ -1,6 +1,6 @@
 package assignments.assignment3;
 
-import assignments.assignment1.NotaGenerator;
+import static assignments.assignment1.NotaGenerator.*;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
