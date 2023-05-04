@@ -1,7 +1,6 @@
 package assignments.assignment3.user.menu;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.service.AntarService;
-import assignments.assignment3.nota.service.CuciService;
 import assignments.assignment3.nota.service.SetrikaService;
 import assignments.assignment3.user.Member;
 import static assignments.assignment1.NotaGenerator.*;
@@ -76,7 +75,6 @@ public class MemberSystem extends SystemCLI {
         }
 
         Nota nota = new Nota(member, berat, paket, tanggal);
-        nota.addService(new CuciService());
 
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
         System.out.println("Hanya tambah 1000 / kg");

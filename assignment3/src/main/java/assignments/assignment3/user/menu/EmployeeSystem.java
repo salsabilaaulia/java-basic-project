@@ -16,7 +16,7 @@ public class EmployeeSystem extends SystemCLI {
             new Employee("Depram", "musiktualembut"),
             new Employee("Lita Duo", "gitCommitPush"),
             new Employee("Ivan Hoshimachi", "SuamiSahSuisei"),
-    };
+        };
     }
     
 
@@ -47,7 +47,7 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("3. Logout");
     }
     protected void menuKerja() {
-        System.out.println("Stand back! Depram beginning to nyuci!");
+        System.out.printf("Stand back! %s beginning to nyuci!\n", loginMember.getNama());
         for (Nota nota : notaList) {
             System.out.println(nota.kerjakan());
         }

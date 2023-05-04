@@ -1,4 +1,5 @@
 package assignments.assignment3.nota;
+import assignments.assignment3.nota.service.CuciService;
 import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
 import static assignments.assignment1.NotaGenerator.*;
@@ -27,6 +28,7 @@ public class Nota {
         this.isDone = false;
         this.id = totalNota;
         this.baseHarga = toHargaPaket(paket);
+        addService(new CuciService());
         totalNota++;
     }
 
@@ -43,7 +45,7 @@ public class Nota {
         for (int i = 0; i < services.length; i++) {
             if (services[i].isDone() == true) {}
             else {
-                return "Nota %d : " + services[i].doWork();
+                return String.format("Nota %d : %s", id, services[i].doWork());
             }
         }
         return String.format("Nota %d : Sudah selesai.", id);
@@ -99,21 +101,13 @@ public class Nota {
         for (int i = 0; i < services.length; i++) {
             output += String.format("-%s @ Rp.%d\n", services[i].getServiceName(), services[i].getHarga(berat));
         }
-        
+
+        output += String.format("Harga Akhir: %d\n", calculateHarga());
+
         if (sisaHariPengerjaan < 0 && isDone == false ) {
-            if (Math.abs(sisaHariPengerjaan) * 2000 > calculateHarga()) {
-                output += String.format("Harga Akhir: 0");
-                output += String.format("Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));
+            output += String.format(" Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));        
             }
-            else {
-                output += String.format("Harga Akhir: %d", calculateHarga());
-                output += String.format("Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));
-            }
-        }
-        else {
-            output += String.format("Harga Akhir: %d", calculateHarga());
-        }
-        output += "\n";
+        
         return output;
     }
 

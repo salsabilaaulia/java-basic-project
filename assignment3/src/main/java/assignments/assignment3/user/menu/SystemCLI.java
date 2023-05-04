@@ -57,16 +57,14 @@ public abstract class SystemCLI {
      */
     public Member authUser(String id, String pass) {
         for (Member user : memberList) {
-            if (!user.getId().equals(id)) {
-                continue;
+            if (user.getId().equals(id)) {
+                if(user.login(id, pass)){
+                    return user;
+                }
             }
-            if(user.login(id, pass)){
-                return user;
-            }
-            return null;
         }
         return null;
-    };
+    }
 
     /**
      * Memeriksa apakah ada Member dengan ID yang diberikan.
