@@ -26,7 +26,7 @@ public abstract class SystemCLI {
             return;
         }
 
-        System.out.println("Invalid ID or password.");
+        System.out.println("Invalid ID or password.\n");
     };
 
     /**

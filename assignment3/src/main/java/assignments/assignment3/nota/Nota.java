@@ -130,7 +130,7 @@ public class Nota {
         if (sisaHariPengerjaan < 0) {
             output += String.format(" Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));        
             }
-        output += "\n\n";
+        output += "\n";
         return output;
     }
 
