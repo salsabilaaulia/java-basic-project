@@ -46,13 +46,19 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("2. Display List Nota");
         System.out.println("3. Logout");
     }
+
+    /*
+     * melakukan kerja laundry
+    */
     protected void menuKerja() {
         System.out.printf("Stand back! %s beginning to nyuci!\n", loginMember.getNama());
         for (Nota nota : notaList) {
             System.out.println(nota.kerjakan());
         }
     }
-
+    /*
+     * melihat status nota
+    */
     protected void lihatListNota() {
         for (Nota nota : notaList) {
             System.out.println(nota.getNotaStatus());

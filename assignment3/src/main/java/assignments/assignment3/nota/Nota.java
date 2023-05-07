@@ -32,6 +32,9 @@ public class Nota {
         totalNota++;
     }
 
+    /*
+     * menambahkan service ke list service
+    */
     public void addService(LaundryService service){
         LaundryService[] temp = new LaundryService[services.length + 1];
         for (int i = 0; i < services.length; i++) {
@@ -41,6 +44,9 @@ public class Nota {
         services = temp;
     }
 
+    /*
+     * melakukan kerja laundry
+    */
     public String kerjakan(){
         for (int i = 0; i < services.length; i++) {
             if (services[i].isDone() == true) {}
@@ -52,17 +58,25 @@ public class Nota {
         return String.format("Nota %d : Sudah selesai.", id);
     }
 
+    /*
+     * mengganti hari nota
+    */
     public void toNextDay() {
         if (isDone != true) {
             sisaHariPengerjaan -= 1;
         }
     }
 
+    /*
+     * menghitung harga laundry
+    */
     public long calculateHarga(){
         long harga = baseHarga * berat;
+        // menambahkan harga servis
         for (LaundryService service : services) {
             harga += service.getHarga(berat);
         }
+        //tidak boleh minus
         if (sisaHariPengerjaan < 0) {
             harga -= (Math.abs(sisaHariPengerjaan)*2000);
             if (harga < 0) {
@@ -72,6 +86,9 @@ public class Nota {
         return harga;
     }
 
+    /*
+     * mereturn string status nota
+    */
     public String getNotaStatus(){
         isDone = isDone();
         if (isDone == true) {
@@ -84,6 +101,7 @@ public class Nota {
 
     @Override
     public String toString(){
+        //mengeset tanggal keluar
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         int year = Integer.parseInt(tanggalMasuk.substring(6));
@@ -91,6 +109,7 @@ public class Nota {
         int date = Integer.parseInt(tanggalMasuk.substring(0, 2));
         cal.set(year, month, date);
         
+        //output
         String output = "";
         output += String.format("[ID Nota = %d]\n", id);
         output += String.format("ID    : %s\n", member.getId());
@@ -107,6 +126,7 @@ public class Nota {
 
         output += String.format("Harga Akhir: %d", calculateHarga());
 
+        //output jika ada kompensasi
         if (sisaHariPengerjaan < 0) {
             output += String.format(" Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));        
             }
@@ -131,6 +151,9 @@ public class Nota {
     public int getSisaHariPengerjaan(){
         return sisaHariPengerjaan;
     }
+    /*
+     * mendefinisikan isDone nota
+    */
     public boolean isDone() {
         for (LaundryService service : services) {
             if (service.isDone() == false) {

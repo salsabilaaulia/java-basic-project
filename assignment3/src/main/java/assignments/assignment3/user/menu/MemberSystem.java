@@ -47,12 +47,15 @@ public class MemberSystem extends SystemCLI {
         temp[temp.length - 1] = member;
         memberList = temp;
     }
-
+    /*
+     * input member melakukan laundry dan membuat nota
+    */
     protected void menuLaundry() {
         Member member = loginMember;
         String tanggal = fmt.format(cal.getTime());
         String paket = "";
         while (true) {
+            //input
             System.out.println("Masukan paket laundry:");
             showPaket();
             paket = in.nextLine();
@@ -74,8 +77,10 @@ public class MemberSystem extends SystemCLI {
             berat = 2;
         }
 
+        //membuat objek nota
         Nota nota = new Nota(member, berat, paket, tanggal);
 
+        //input servis
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
         System.out.println("Hanya tambah 1000 / kg");
         System.out.print("[Ketik x untuk tidak mau]: ");
@@ -94,12 +99,16 @@ public class MemberSystem extends SystemCLI {
             nota.addService(new AntarService());
         }
 
+        //menambahkan nota ke nist nota
         addNota(nota);
         member.addNota(nota);
 
         System.out.println("Nota berhasil dibuat!");
     }
 
+    /*
+     * melihat list nota member
+    */
     protected void lihatNota() {
         for (Nota nota : loginMember.getNotaList()) {
             System.out.print(nota);
