@@ -48,11 +48,14 @@ public class Nota {
                 return String.format("Nota %d : %s", id, services[i].doWork());
             }
         }
+        isDone = true;
         return String.format("Nota %d : Sudah selesai.", id);
     }
 
     public void toNextDay() {
-        sisaHariPengerjaan--;
+        if (isDone != true) {
+            sisaHariPengerjaan -= 1;
+        }
     }
 
     public long calculateHarga(){
@@ -60,7 +63,7 @@ public class Nota {
         for (LaundryService service : services) {
             harga += service.getHarga(berat);
         }
-        if (sisaHariPengerjaan < 0 && isDone == false) {
+        if (sisaHariPengerjaan < 0) {
             harga -= (Math.abs(sisaHariPengerjaan)*2000);
             if (harga < 0) {
                 harga = 0;
@@ -102,12 +105,12 @@ public class Nota {
             output += String.format("-%s @ Rp.%d\n", services[i].getServiceName(), services[i].getHarga(berat));
         }
 
-        output += String.format("Harga Akhir: %d\n", calculateHarga());
+        output += String.format("Harga Akhir: %d", calculateHarga());
 
-        if (sisaHariPengerjaan < 0 && isDone == false ) {
+        if (sisaHariPengerjaan < 0) {
             output += String.format(" Ada kompensasi keterlambatan %d * 2000 hari", Math.abs(sisaHariPengerjaan));        
             }
-        
+        output += "\n\n";
         return output;
     }
 
