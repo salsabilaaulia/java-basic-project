@@ -42,7 +42,6 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     protected JPanel initializeButtons() {
         JButton[] buttons = createButtons();
         ActionListener[] listeners = createActionListeners();
-        System.out.print(buttons.length + listeners.length);
 
         if (buttons.length != listeners.length) {
             throw new IllegalStateException("Number of buttons and listeners must be equal.");

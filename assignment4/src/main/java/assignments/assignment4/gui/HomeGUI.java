@@ -37,13 +37,13 @@ public class HomeGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        GridBagConstraints gbc = new GridBagConstraints(); 
+        GridBagConstraints gbc = new GridBagConstraints(); //mengatur posisi komponen
 
         // konfigurasi komponen
-        gbc.fill = GridBagConstraints.HORIZONTAL;  
+        gbc.fill = GridBagConstraints.HORIZONTAL; 
         gbc.gridy = 0;  
         titleLabel = new JLabel("Selamat datang di CuciCuci System!");
-        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         mainPanel.add(titleLabel, gbc);
 
         gbc.gridy = 1;  
@@ -103,7 +103,7 @@ public class HomeGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(mainPanel, "Kamu tidur hari ini... zzz...", "Next Day!!!", JOptionPane.INFORMATION_MESSAGE);
                 toNextDay();
-                dateLabel.setText("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
+                dateLabel.setText("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime())); //mengganti label hari
                 MainFrame.getInstance().navigateTo(HomeGUI.KEY);
             }
         });

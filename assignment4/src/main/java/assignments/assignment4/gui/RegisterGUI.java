@@ -3,7 +3,6 @@ package assignments.assignment4.gui;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
-import assignments.assignment4.MainFrame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +23,10 @@ public class RegisterGUI extends JPanel {
     private JButton backButton;
 
     public RegisterGUI(LoginManager loginManager) {
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
+        super(new BorderLayout()); // Setup layout
         this.loginManager = loginManager;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -42,9 +41,9 @@ public class RegisterGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
-        GridBagConstraints gbc = new GridBagConstraints(); 
+        GridBagConstraints gbc = new GridBagConstraints(); //mengatur posisi komponen
 
+        // konfigurasi komponen
         gbc.fill = GridBagConstraints.HORIZONTAL; 
         gbc.gridy = 0;  
         gbc.gridx = 0;  
@@ -53,12 +52,12 @@ public class RegisterGUI extends JPanel {
         
         gbc.gridx = 1;  
         gbc.ipadx = 200;
-        gbc.insets = new Insets(30,0,0,0); //padding
         nameTextField = new JTextField();
         mainPanel.add(nameTextField, gbc);
 
         gbc.gridy = 1;  
         gbc.gridx = 0;  
+        gbc.insets = new Insets(30,0,0,0); //padding
         phoneLabel = new JLabel("Masukan nomor handphone Anda:");
         mainPanel.add(phoneLabel, gbc);
 
@@ -119,27 +118,33 @@ public class RegisterGUI extends JPanel {
                 String nama = nameTextField.getText();
                 String noHp = phoneTextField.getText();
                 String password = new String(passwordField.getPassword());
-                Member member = loginManager.register(nama, noHp, password);
-         
-                if (MainFrame.isNumeric(noHp) == true) {
-                    if (member != null) {
-                        JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID " + member.getId(), "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
-                        nameTextField.setText("");
-                        phoneTextField.setText("");
-                        passwordField.setText("");
-                        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(mainPanel, "User dengan nama " + nama + " dan nomor hp "+ noHp +" sudah ada!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
-                        nameTextField.setText("");
-                        phoneTextField.setText("");
-                        passwordField.setText("");
-                        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-                    }
+                //validasi register member
+                if (nama.equals("") || noHp.equals("") || password.equals("")) {
+                    JOptionPane.showMessageDialog(mainPanel, "Input tidak boleh kosong!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
-                    phoneTextField.setText("");
+                    Member member = loginManager.register(nama, noHp, password);
+                    if (MainFrame.isNumeric(noHp) == true) {
+                        if (member != null) {
+                            JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID " + member.getId(), "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
+                            nameTextField.setText("");
+                            phoneTextField.setText("");
+                            passwordField.setText("");
+                            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(mainPanel, "User dengan nama " + nama + " dan nomor hp "+ noHp +" sudah ada!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+                            nameTextField.setText("");
+                            phoneTextField.setText("");
+                            passwordField.setText("");
+                            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+                        }
+                    }
+                    //validasi input no hp
+                    else {
+                        JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+                        phoneTextField.setText("");
+                    }
                 }
             }
         });

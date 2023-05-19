@@ -36,7 +36,7 @@ public class CreateNotaGUI extends JPanel {
         this.fmt = NotaManager.fmt;
         this.cal = NotaManager.cal;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -51,9 +51,8 @@ public class CreateNotaGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
-        GridBagConstraints gbc = new GridBagConstraints(); 
-
+        GridBagConstraints gbc = new GridBagConstraints(); //mengatur posisi komponen
+        // konfigurasi komponen
         gbc.fill = GridBagConstraints.HORIZONTAL; 
         gbc.gridy = 0;  
         gbc.gridx = 0;  
@@ -131,15 +130,18 @@ public class CreateNotaGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "createNotaButton"
      * */
     private void createNota() {
-        // TODO
         createNotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {  
                 String tanggal = fmt.format(cal.getTime());
                 String paket = (String) paketComboBox.getSelectedItem();
                 String strBerat = beratTextField.getText();
-                if (MainFrame.isNumeric(strBerat) == false || strBerat.equals("") || strBerat.equals("0")) {
-                    JOptionPane.showMessageDialog(mainPanel, "Berat cucian harus berisi angka", "Info", JOptionPane.INFORMATION_MESSAGE);
+                //validasi input
+                if (strBerat.equals("")) {
+                    JOptionPane.showMessageDialog(mainPanel, "Input tidak boleh kosong!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(MainFrame.isNumeric(strBerat) == false || strBerat.equals("0")) {
+                    JOptionPane.showMessageDialog(mainPanel, "Berat cucian harus berisi angka bulat positif", "Info", JOptionPane.INFORMATION_MESSAGE);
                     beratTextField.setText("");
                 }
                 else {
@@ -149,7 +151,7 @@ public class CreateNotaGUI extends JPanel {
                         JOptionPane.showMessageDialog(mainPanel, "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }
                     Nota nota = new Nota(memberSystemGUI.getLoggedInMember(), berat, paket, tanggal);
-
+                    //menambahkan servis dalam nota
                     if (setrikaCheckBox.isSelected()) {
                         nota.addService(new SetrikaService());
                     }
@@ -161,6 +163,8 @@ public class CreateNotaGUI extends JPanel {
                     memberSystemGUI.getLoggedInMember().addNota(nota);
 
                     JOptionPane.showMessageDialog(mainPanel, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    //reset isi komponen
                     beratTextField.setText("");
                     paketComboBox.setSelectedIndex(0);
                     setrikaCheckBox.setSelected(false);
@@ -185,6 +189,5 @@ public class CreateNotaGUI extends JPanel {
                 MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
             }
         });
-        // TODO
     }
 }

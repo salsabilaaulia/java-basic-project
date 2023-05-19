@@ -66,8 +66,9 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         String notaText = "";
+        //output nota sesuai ketentuan
         if (loggedInMember.getNotaList().length == 0) {
-            notaText = "Belum pernah laundry di CuciCuci, hiks :'()";
+            notaText = "Belum pernah laundry di CuciCuci, hiks :'(";
         }
         else {
             for (Nota nota : loggedInMember.getNotaList()) {
@@ -76,14 +77,12 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         }
         textArea.setText(notaText);
         textArea.setEditable(false);
-        // wrap a scrollpane around it
+        //objek scrollpane
         scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(300, 300));
 
-        // display them in a message dialog
+        //menampilkan dalam message dialog
         JOptionPane.showMessageDialog(panel, scrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
-
-        notaText = "";
     }
 
     /**

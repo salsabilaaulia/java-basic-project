@@ -2,7 +2,6 @@ package assignments.assignment4.gui;
 
 import assignments.assignment3.LoginManager;
 import assignments.assignment4.MainFrame;
-import static assignments.assignment4.MainFrame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,41 +38,41 @@ public class LoginGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        GridBagConstraints gbc = new GridBagConstraints(); 
-        // TODO
+        GridBagConstraints gbc = new GridBagConstraints();  //mengatur posisi komponen
+
+        // konfigurasi komponen
         gbc.fill = GridBagConstraints.HORIZONTAL;  
         gbc.gridy = 0;  
-        gbc.ipadx = 50;
         idLabel = new JLabel("Masukan ID Anda:", SwingConstants.LEFT);
         mainPanel.add(idLabel, gbc);
 
-
-        gbc.gridy = 1;  
-        gbc.gridwidth = 2;
-        gbc.insets = new Insets(30,0,0,0); //padding
+        gbc.gridx = 1;  
+        gbc.ipadx = 200;
         idTextField = new JTextField();
         mainPanel.add(idTextField, gbc);
 
-        gbc.gridy = 2;  
+        gbc.gridy = 1;  
+        gbc.gridx = 0; 
+        gbc.insets = new Insets(30,0,0,0); //padding
         passwordLabel = new JLabel("Masukan password Anda");
         mainPanel.add(passwordLabel, gbc);
 
-        gbc.gridy = 3;  
+        gbc.gridx = 1; 
         passwordField = new JPasswordField();
         mainPanel.add(passwordField, gbc);
         
-        gbc.gridwidth = 1;
-        gbc.gridx = 1; 
-        gbc.gridy = 4;  
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.ipadx = 50;
+        gbc.gridwidth = 2;
+        gbc.gridy = 2;  
+        gbc.gridx = 0;  
         gbc.insets = new Insets(30,20,0,0);
         loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(80, 30));
         mainPanel.add(loginButton, gbc);
         handleLogin();  
-        
 
-        gbc.gridx = 0; 
-        gbc.insets = new Insets(30,0,0,20);
+        gbc.gridy = 4;
         backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(80, 30));
         mainPanel.add(backButton, gbc);
@@ -105,6 +104,7 @@ public class LoginGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {  
                 String password = new String(passwordField.getPassword());
                 String id = idTextField.getText();
+                //validasi member duplikat
                 if (loginManager.getSystem(id) != null) {
                     MainFrame.getInstance().login(id, password);
                     idTextField.setText("");
