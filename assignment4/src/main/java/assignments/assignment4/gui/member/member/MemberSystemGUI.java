@@ -12,6 +12,11 @@ import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "MEMBER";
+    private JButton laundryButton;
+    private JButton notaButton;
+    private JTextArea textArea = new JTextArea();
+    private JScrollPane scrollPane;
+    private JPanel panel = new JPanel();
 
     public MemberSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
@@ -34,8 +39,10 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
+        laundryButton = new JButton("Saya ingin laundry");
+        notaButton = new JButton("Lihat detail nota saya");
         return new JButton[]{
+            laundryButton, notaButton
         };
     }
 
@@ -58,7 +65,25 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
+        String notaText = "";
+        if (loggedInMember.getNotaList().length == 0) {
+            notaText = "Belum pernah laundry di CuciCuci, hiks :'()";
+        }
+        else {
+            for (Nota nota : loggedInMember.getNotaList()) {
+                notaText += nota + "\n";
+            }
+        }
+        textArea.setText(notaText);
+        textArea.setEditable(false);
+        // wrap a scrollpane around it
+        scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(300, 300));
+
+        // display them in a message dialog
+        JOptionPane.showMessageDialog(panel, scrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+
+        notaText = "";
     }
 
     /**
@@ -66,7 +91,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
+        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 
 }

@@ -33,11 +33,11 @@ public class MainFrame extends JFrame{
     private MainFrame(){
         super("CuciCuciSystem");
 //        TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
-//        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-//        employeeSystem.addEmployee(new Employee[]{
-//                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-//                new Employee("Regret", "FansBeratKanaArima")
-//        });
+       // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+       employeeSystem.addEmployee(new Employee[]{
+               new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
+               new Employee("Regret", "FansBeratKanaArima")
+       });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -83,7 +83,7 @@ public class MainFrame extends JFrame{
      * @param page -> key dari halaman yang diinginkan.
      * */
     public void navigateTo(String page){
-        // TODO
+        cards.show(mainPanel, page);
     }
 
     /**
@@ -97,9 +97,17 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
-        for (Loginable panel:
-                loginablePanel) {
-            // TODO
+        for (Loginable panel : loginablePanel) {
+            if(memberSystem.isMemberExist(id)){
+                if(panel.login(id, password) == true) {
+                    navigateTo(panel.getPageName());
+                }
+            }
+            if(employeeSystem.isMemberExist(id)){
+                if(panel.login(id, password) == true) {
+                    navigateTo(panel.getPageName());
+                }
+            }
         }
         return false;
     }
@@ -122,5 +130,13 @@ public class MainFrame extends JFrame{
         // silakan akses https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
         // Tapi in general kalian tidak usah terlalu overthinking line ini selain fungsi utamanya adalah menampilkan GUI
         SwingUtilities.invokeLater(MainFrame::getInstance);
+    }
+    
+    public static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c))
+                return false;
+        }
+        return true;
     }
 }

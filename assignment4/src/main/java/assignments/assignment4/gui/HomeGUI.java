@@ -37,26 +37,75 @@ public class HomeGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
+        GridBagConstraints gbc = new GridBagConstraints(); 
+
+        // konfigurasi komponen
+        gbc.fill = GridBagConstraints.HORIZONTAL;  
+        gbc.gridy = 0;  
+        titleLabel = new JLabel("Selamat datang di CuciCuci System!");
+        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        mainPanel.add(titleLabel, gbc);
+
+        gbc.gridy = 1;  
+        gbc.insets = new Insets(30,0,0,0); //padding
+        loginButton = new JButton("Login");
+        mainPanel.add(loginButton, gbc);
+        handleToLogin(loginButton);
+
+        gbc.gridy = 2;  
+        registerButton = new JButton("Register");
+        mainPanel.add(registerButton, gbc);
+        handleToRegister(registerButton);
+
+        gbc.gridy = 3;  
+        toNextDayButton = new JButton("Next Day");
+        mainPanel.add(toNextDayButton, gbc);
+        handleNextDay(toNextDayButton);
+
+        gbc.gridy = 4;  
+        dateLabel = new JLabel("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()), JLabel.CENTER);
+        mainPanel.add(dateLabel, gbc);
     }
 
     /**
      * Method untuk pergi ke halaman register.
      * Akan dipanggil jika pengguna menekan "registerButton"
      * */
-    private static void handleToRegister() {
+    private static void handleToRegister(JButton registerButton) {
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {  
+                MainFrame.getInstance().navigateTo(RegisterGUI.KEY);
+            }
+        });
     }
 
     /**
      * Method untuk pergi ke halaman login.
      * Akan dipanggil jika pengguna menekan "loginButton"
      * */
-    private static void handleToLogin() {
+    private static void handleToLogin(JButton loginButton ) {
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainFrame.getInstance().navigateTo(LoginGUI.KEY);
+            }
+        });
     }
 
     /**
      * Method untuk skip hari.
      * Akan dipanggil jika pengguna menekan "toNextDayButton"
      * */
-    private void handleNextDay() {
+    private void handleNextDay(JButton toNextDayButton) {
+        toNextDayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(mainPanel, "Kamu tidur hari ini... zzz...", "Next Day!!!", JOptionPane.INFORMATION_MESSAGE);
+                toNextDay();
+                dateLabel.setText("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
+                MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+            }
+        });
     }
 }

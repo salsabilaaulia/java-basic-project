@@ -7,10 +7,16 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class EmployeeSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "EMPLOYEE";
+    private JButton cuciButton;
+    private JButton notaButton;
+    private JTextArea textArea = new JTextArea();
+    private JScrollPane scrollPane;
+    private JPanel panel = new JPanel();
 
     public EmployeeSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
@@ -31,7 +37,10 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
     @Override
     protected JButton[] createButtons() {
         // TODO
+        cuciButton = new JButton("It's nyuci time");
+        notaButton = new JButton("Display list nota");
         return new JButton[]{
+            cuciButton, notaButton
         };
     }
 
@@ -54,6 +63,17 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void displayNota() {
+        String notaText = "";
+        if (loggedInMember.getNotaList().length == 0) {
+            notaText = "Belum ada nota";
+        }
+        else {
+            for (Nota nota : NotaManager.notaList) {
+                notaText += nota.getNotaStatus() + "\n";
+            }
+        }
+        // display them in a message dialog
+        JOptionPane.showMessageDialog(panel, notaText, "List Nota", JOptionPane.INFORMATION_MESSAGE);
         // TODO
     }
 
@@ -63,5 +83,16 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        String notaText = "";
+        JOptionPane.showMessageDialog(panel, "Stand back! " + loggedInMember.getNama() + " beginning to nyuci!", "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+        for (Nota nota : NotaManager.notaList) {
+            notaText += nota.kerjakan() + "\n";
+        }
+        if (NotaManager.notaList.length == 0) {
+            JOptionPane.showMessageDialog(panel, "nothing to cuci here", "Nyuci Results", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(panel, notaText, "Nyuci Results", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
